@@ -1,8 +1,8 @@
 <template>
   <div id="app">
-    <Aggiungi/>
-    <Lista/>
+     
     <div>
+       
       <input type="text" v-model="new_task" placeholder="inserire nuova task">
       <button  @click="add_task">inserisci</button>
     </div>
@@ -10,11 +10,13 @@
       <div v-for="(task,index) in array_task" :key="index">
          
          
-         <input v-if="task.modifica" type="text" v-model="modifica"> 
-         <div v-else>{{task.task}}</div>
+         <input v-if="task.modifica" type="text" v-model="task_da_modificare"> 
+         <span v-else>{{task.task}}</span>
         <button  @click="copy_task(index)">copiami</button>
-        <button  @click="delete_task(index)">eliminami</button>
-        <button  @click="modify_task(index)">modificami</button>
+        <button  @click="delete_task(index)" type="button"  >eliminami</button>
+       
+        <button v-if="task.modifica"   @click="modify_task(index)">salva modifiche</button>
+         <button v-else @click="modify_task(index)">modificami</button>
       </div>
     </div>
           
@@ -23,7 +25,8 @@
 </template>
 
 <script>
-  
+ 
+import 'bootstrap/dist/css/bootstrap.min.css'; 
 export default {
   name: 'App',
   data: function () {
@@ -37,16 +40,20 @@ export default {
                 modifica: false
             }],
       new_task:[],
-      
+      task_da_modificare:[]
     }
   },
   methods:{
     add_task(){
-      var task={
+      if(this.new_task!=0){
+        var task={
                 task: this.new_task,
                 modifica: false
             }
-      this.array_task.push(task)
+      this.array_task.push(task);
+      this.new_task=[]
+      }
+      
     },
     copy_task(index){
       var task={
@@ -62,12 +69,15 @@ export default {
      
       if (this.array_task[index].modifica==true){
         this.array_task[index].modifica=false
+        this.array_task[index].task=this.task_da_modificare
       }
       else{
         this.array_task.forEach(element => {
             element.modifica=false
+             
         });
         this.array_task[index].modifica=true
+        this.task_da_modificare=this.array_task[index].task
       }
     }
   }
