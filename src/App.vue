@@ -1,28 +1,80 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <Aggiungi/>
+    <Lista/>
+    <div>
+      <input type="text" v-model="new_task" placeholder="inserire nuova task">
+      <button  @click="add_task">inserisci</button>
+    </div>
+    <div>
+      <div v-for="(task,index) in array_task" :key="index">
+         
+         
+         <input v-if="task.modifica" type="text" v-model="modifica"> 
+         <div v-else>{{task.task}}</div>
+        <button  @click="copy_task(index)">copiami</button>
+        <button  @click="delete_task(index)">eliminami</button>
+        <button  @click="modify_task(index)">modificami</button>
+      </div>
+    </div>
+          
+    
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
+  
 export default {
   name: 'App',
-  components: {
-    HelloWorld
+  data: function () {
+    return {
+      array_task:[{
+                task: 'latte',
+                modifica: false
+            },
+            {
+                task: 'uova',
+                modifica: false
+            }],
+      new_task:[],
+      
+    }
+  },
+  methods:{
+    add_task(){
+      var task={
+                task: this.new_task,
+                modifica: false
+            }
+      this.array_task.push(task)
+    },
+    copy_task(index){
+      var task={
+                task: this.array_task[index].task,
+                modifica: false
+            }
+      this.array_task.push(task)
+    },
+    delete_task(index){
+       this.array_task.splice(index,1)
+    },
+    modify_task(index){
+     
+      if (this.array_task[index].modifica==true){
+        this.array_task[index].modifica=false
+      }
+      else{
+        this.array_task.forEach(element => {
+            element.modifica=false
+        });
+        this.array_task[index].modifica=true
+      }
+    }
   }
+  
 }
 </script>
 
 <style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+ 
 </style>
