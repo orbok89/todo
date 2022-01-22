@@ -1,22 +1,22 @@
 <template>
-  <div id="app">
-     
-    <div>
-       
-      <input type="text" v-model="new_task" placeholder="inserire nuova task">
+  <div id="app" class="container-main" >
+    
+    <div class="centratura" >
+      <h1 >Lista di cose da fare</h1>
+      <input type="text" v-model="new_task" @keydown.enter="add_task" placeholder="inserire nuova task">
       <button  @click="add_task">inserisci</button>
     </div>
-    <div>
-      <div v-for="(task,index) in array_task" :key="index">
-         
-         
-         <input v-if="task.modifica" type="text" v-model="task_da_modificare"> 
-         <span v-else>{{task.task}}</span>
-        <button  @click="copy_task(index)">copiami</button>
-        <button  @click="delete_task(index)" type="button"  >eliminami</button>
-       
-        <button v-if="task.modifica"   @click="modify_task(index)">salva modifiche</button>
-         <button v-else @click="modify_task(index)">modificami</button>
+    <div class="m-3 border border-primary" >
+      <div v-for="(task,index) in array_task" :key="index" class="prova  ">
+        <div class="bottoni">
+          <button  @click="copy_task(index)">copiami</button>
+        <button class="m-2" @click="delete_task(index)" type="button"  >eliminami</button>
+        <button  class="bottone-singolo" v-if="task.modifica"   @click="modify_task(index)">salva </button>
+        <button   v-else @click="modify_task(index)">modificami</button>
+        </div>
+        <input v-if="task.modifica" type="text" v-model="task_da_modificare" class="task"> 
+        <div v-else class="task">{{task.task}}</div>
+        
       </div>
     </div>
           
@@ -86,5 +86,33 @@ export default {
 </script>
 
 <style lang="scss">
- 
+ .container-main{
+    
+   width: 80%;
+   margin: 50px auto 0;
+    
+ }
+ .task{
+  width: 65%;
+   
+  display: inline-block;
+ }
+ .bottoni{
+   width: 35%;
+   
+   display: inline-block;
+    
+ }
+ .prova{
+   width: 80%;
+   margin: 2px auto;
+    
+ }
+ .bottone-singolo{
+   min-width: 90px;
+ }
+ .centratura{
+   text-align: center;
+ }
+  
 </style>
