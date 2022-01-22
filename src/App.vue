@@ -7,12 +7,12 @@
       <button  @click="add_task">inserisci</button>
     </div>
     <div class="m-3 border border-primary" >
-      <div v-for="(task,index) in array_task" :key="index" class="prova  ">
+      <div v-for="(task,index) in array_task" :key="index" class="containre-task  ">
         <div class="bottoni">
           <button  @click="copy_task(index)">copiami</button>
-        <button class="m-2" @click="delete_task(index)" type="button"  >eliminami</button>
-        <button  class="bottone-singolo" v-if="task.modifica"   @click="modify_task(index)">salva </button>
-        <button   v-else @click="modify_task(index)">modificami</button>
+          <button class="m-2" @click="delete_task(index)" type="button"  >eliminami</button>
+          <button  class="bottone-singolo" v-if="task.modifica"   @click="modify_task(index)">salva </button>
+          <button   v-else @click="modify_task(index)">modificami</button>
         </div>
         <input v-if="task.modifica" type="text" v-model="task_da_modificare" class="task"> 
         <div v-else class="task">{{task.task}}</div>
@@ -86,27 +86,21 @@ export default {
 </script>
 
 <style lang="scss">
- .container-main{
-    
+ .container-main{ 
    width: 80%;
    margin: 50px auto 0;
-    
  }
  .task{
   width: 65%;
-   
   display: inline-block;
  }
  .bottoni{
    width: 35%;
-   
-   display: inline-block;
-    
+   display: inline-block; 
  }
- .prova{
+ .containre-task {
    width: 80%;
    margin: 2px auto;
-    
  }
  .bottone-singolo{
    min-width: 90px;
